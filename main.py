@@ -1,14 +1,16 @@
-import os
 import importlib.util
+import os
+
 
 executed_cmds = set()
 
 
-def execute_cmds(file_path):
+def execute_cmds(module_code):
     global executed_cmds
-    spec = importlib.util.spec_from_file_location("module.name", file_path)
+    module_name = "temp_module"
+    spec = importlib.util.spec_from_loader(module_name, loader=None)
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    exec(module_code, module.__dict__)
 
     if hasattr(module, 'CMDS'):
         for cmd in module.CMDS:
@@ -17,7 +19,7 @@ def execute_cmds(file_path):
                 os.system(cmd)
                 executed_cmds.add(cmd)
             else:
-                print(f"The command '{cmd}' have already been executed")
+                print(f"The command '{cmd}' has already been executed")
 
 
 def collect_files(directory):
@@ -36,7 +38,9 @@ def main(directory):
     sorted_files = collect_files(directory)
 
     for file_path in sorted_files:
-        execute_cmds(file_path)
+        with open(file_path, "r") as file:
+            module_code = file.read()
+            execute_cmds(module_code)
 
 
 if __name__ == "__main__":
