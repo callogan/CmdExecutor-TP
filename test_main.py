@@ -1,27 +1,27 @@
-import unittest
+import main
 import os
 import shutil
 import tempfile
-import main
+import unittest
 
 
 class TestCommandExecution(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Setting up testing environment.
         Creating temporary directory for testing.
         """
         self.test_dir = tempfile.mkdtemp()
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         """
         Cleaning up after testing.
         Deleting temporary directory and all its content.
         """
         shutil.rmtree(self.test_dir)
 
-    def create_test_file(self, filename, content):
+    def create_test_file(self, filename, content) -> None:
         """
         Creates test file with stated content in temporary directory.
 
@@ -32,7 +32,7 @@ class TestCommandExecution(unittest.TestCase):
         with open(os.path.join(self.test_dir, filename), 'w') as file:
             file.write(content)
 
-    def test_unique_commands(self):
+    def test_unique_commands(self) -> None:
         """
         Checks on the execution of unique commands.
         Creates files with unique commands and checks on,
@@ -51,7 +51,7 @@ class TestCommandExecution(unittest.TestCase):
             finally:
                 os.remove(temp_file.name)
 
-    def test_repeated_commands(self):
+    def test_repeated_commands(self) -> None:
         """
         Checks on processing of repeated commands.
         Creates files with repeated commands and checks on
@@ -71,7 +71,7 @@ class TestCommandExecution(unittest.TestCase):
             finally:
                 os.remove(temp_file.name)
 
-    def test_empty_cmds(self):
+    def test_empty_cmds(self) -> None:
         """
         Checks on file processing with the empty command list.
         Creates the file with the empty command list and checks on
@@ -87,7 +87,7 @@ class TestCommandExecution(unittest.TestCase):
             finally:
                 os.remove(temp_file.name)
 
-    def test_files_without_cmds(self):
+    def test_files_without_cmds(self) -> None:
         """
         Checks on file processing without CMDS variable.
         Creates the file without CMDS variable and checks on
