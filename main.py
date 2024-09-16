@@ -5,7 +5,7 @@ import os
 executed_cmds = set()
 
 
-def execute_cmds(module_code):
+def execute_cmds(module_code) -> None:
     """
     Loads the module from code string and executes commands
     contained in CMDS variable.
@@ -19,7 +19,6 @@ def execute_cmds(module_code):
     and them to the list of executed commands.
     Outputs commands and notification about repetition.
     """
-    global executed_cmds
     module_name = 'temp_module'
     spec = importlib.util.spec_from_loader(module_name, loader=None)
     module = importlib.util.module_from_spec(spec)
@@ -35,7 +34,7 @@ def execute_cmds(module_code):
                 print(f"The command '{cmd}' has already been executed")
 
 
-def collect_files(directory):
+def collect_files(directory) -> list:
     """
     Collects all the Python files (.py) from the directory tree
     and sorts them in the alphabetical order.
@@ -64,7 +63,7 @@ def collect_files(directory):
     return py_files
 
 
-def main(directory):
+def main(directory) -> None:
     """
     Main function for collecting, processing and executing commands
     from Python files in given directory.
